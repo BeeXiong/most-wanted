@@ -1,0 +1,42 @@
+{
+  "name": "mostwanted",
+  "version": "1.0.0",
+  "description": "most wanted project",
+  "main": "app.js",
+  "scripts": {
+    "test": "karma start karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BeeXiong/starter-most-wanted.git"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true,
+      "jasmine": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
+    "rules": {
+      "no-unused-vars": 0,
+      "semi": 1
+    }
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BeeXiong/starter-most-wanted/issues"
+  },
+  "homepage": "https://github.com/BeeXiong/starter-most-wanted#readme",
+  "devDependencies": {
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.4.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0"
+  }
+}

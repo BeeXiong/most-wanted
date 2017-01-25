@@ -2,12 +2,57 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>devCodeCamp &middot; Most Wanted</title>
-  </head>
-  <body>
-    <button onclick="initSearch(data)">Start Searching</button>
+    <title>Most Wanted - Proof of Concept</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="MostWantedCSS.css">
+	 <style>
+	</style>
     <script src="data.js"></script>
     <script src="gui.js"></script>
     <script src="app.js"></script>
+  </head>
+
+  <body>
+
+<nav class="navbar fixed-top navbar-inverse bg-primary">
+  <a class="navbar-brand" href="#">Most Wanted</a>
+
+
+
+
+</nav>
+
+
+
+<div class ="container padding">
+	<div class = "row">
+		<div class= "padding">
+    	<button onclick="initSearch(data)">Start Searching</button>
+		</div>
+		<div>
+			<div class="dropdown">
+				<button type="button" class="btn btn-default dropdown-toggle"  data-toggle="dropdown">
+				Select Trait Here <div class="caret"></div>
+				</button>
+				<ul class="dropdown-menu">
+					<li><h6 class="dropdown-header">Traits</h6></li>
+					<li><a class="dropdown-item" href="#">Eye Color</a></li>
+					<li><a class="dropdown-item" href="#">Gender</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<nav class="navbar fixed-bottom navbar-inverse bg-primary">
+  <a class="navbar-brand" href="#">Most Wanted</a>
+</nav>
+
+
+
+    <!-- need to add dropdown javascript -->
+
+
   </body>
 </html>
