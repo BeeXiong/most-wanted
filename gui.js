@@ -108,7 +108,7 @@ function identifyTraitSelection(traitToSearch){
 }
 function initSearchForDecendents(people, resultsArray, emptyDecendents=[],i){//id maybe subbed for array
 var arraylength = resultsArray.length;
-for(i; i<= arraylength; i++)
+
 	{if (resultsArray[i] == undefined){
 		return undefined;
 	}
@@ -117,7 +117,7 @@ for(i; i<= arraylength; i++)
 
 		var newArray = people.filter(function(person){//people might be an issue
 			var parentsArray = person.parents;
-			var firstParentId = getSearchedResult(parentsArray, i);
+			var firstParentId = getFirstParentResult(parentsArray, i);
 			var secondParentId = getSecondParentResult(parentsArray);
 			if((firstParentId == searchedPerson.id || secondParentId == searchedPerson.id)){
 				emptyDecendents.push(person);
@@ -125,18 +125,24 @@ for(i; i<= arraylength; i++)
 			}
 			else
 			{return false;}
+		});}
 
-		});
-		initSearchForDecendents(people, newArray, emptyDecendents);
+		initSearchForDecendents(people, newArray, emptyDecendents,i);
 
     return emptyDecendents;
-	}}
+	}
 }
 function getSearchedResult(array,index){
 	if (array[index] == undefined){
 		return undefined;
 	}
 	else return array[index];
+}
+function getFirstParentResult(array){
+	if (array[0] == undefined){
+		return undefined;
+	}
+	else return array[0];
 }
 function getSecondParentResult(array){
 	if (array[1] == undefined){
