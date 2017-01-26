@@ -1,10 +1,26 @@
 //search for multiple categories by associatig items to objects
-function initSearch(people){
+function initSearch(people)
+{
 	var input = prompt("Do you know the name of the person you are searching for?");
 		if(input == "yes")
 		{
-			var NameSearchResults = initSearchByName(people);
+			var firstName = promptForFirstName();
+			var lastName = promptForLastName();
+			var NameSearchResults = initSearchByName(people,firstName,lastName);
 			displayResults(NameSearchResults);
+			var decendentAnswer = promptForDecendents();
+			var decendents = [];
+			if (decendentAnswer == "yes"){
+				decendents = initSearchForDecendents(people,NameSearchResults,decendents);
+			}
+			else if (input == "no")
+			{
+				initSearch(people);
+			}
+			else
+			{
+			alert("Invalid Entry. Please try again.");
+			}
 		}
 		else if(input == "no")
 		{
@@ -17,28 +33,18 @@ function initSearch(people){
 		initSearch(people);
 		}
 }
-function initSearchByName(people){
-	var firstName = promptForFirstName();
-	var lastName = promptForLastName();
+function initSearchByName(people,fName, lName){
 	return people.filter(function(person){
-		if(firstName.toLowerCase() == person.firstName.toLowerCase() && lastName.toLowerCase() == person.lastName.toLowerCase())
+		if(fName.toLowerCase() == person.firstName.toLowerCase() && lName.toLowerCase() == person.lastName.toLowerCase())
 		{
 			return true;
 		}
-		else
-		{
+		else{
 			return false;
 		}
 	});
 }
-function promptForFirstName(){
-	var firstName = prompt("Please type the First Name of the person.");
-	return firstName;
-}
-function promptForLastName(){
-	var lastName = prompt("Please type the Last Name of the person");
-	return lastName;
-}
+
 function initSearchByTraits(people){
 	var userSelection = promptForTraits();
 	var trait = identifyTraitSelection(userSelection);
@@ -98,6 +104,53 @@ function identifyTraitSelection(traitToSearch){
 		("Invalid Selection. Please try again");
 		initSearchByTraits(traitToSearch);
 		}
+}
+function initSearchForDecendents(people, resultsArray, emptyDecendents){//id maybe subbed for array
+	var decendents = [];
+	if (resultsArray[0] == undefined){
+		return undefined;
+	}
+	else {
+		var searchedPerson = getSearchedResult(resultsArray);
+		var parentsArray = searchedPerson.parents;
+		var firstParentId = getSearchedResult(parentsArray);
+		var secondParentId = getSecondParentResult(parentsArray);
+		var newArray = people.filter(function(person){//people might be an issue
+			if((firstParentId == person.id || secondParentId == person.id)){
+				decendents.push(person);
+				return true;
+			}
+			else
+			{return false;}
+
+		});
+		initSearchForDecendents(people, newArray);
+
+    return decendents;
+	}
+}
+function getSearchedResult(array){
+	if (array[0] == undefined){
+		return undefined;
+	}
+	else return array[0];
+}
+function getSecondParentResult(array){
+	if (array[1] == undefined){
+		return undefined;
+	}
+	else return array[1];
+}
+function promptForFirstName(){
+	var firstName = prompt("Please type the First Name of the person.");
+	return firstName;
+}
+function promptForLastName(){
+	var lastName = prompt("Please type the Last Name of the person");
+	return lastName;
+}
+function promptForDecendents(){
+	return prompt("Would you like to see this person's decendents?");
 }
 function promptForTraits(){
 	return prompt("Please select the Trait to search by\nAge\nHeight\nWeight\nEye Color\nJob ");
