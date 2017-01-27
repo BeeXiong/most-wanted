@@ -128,7 +128,7 @@ var arraylength = resultsArray.length;
 	}
 }
 function getSearchedResult(array, index, lengthOfArray){
-if(index < 0 && lengthOfArray>=index)
+if(index < 0)
 		{
 		index = index + 1;
 		if (array[index] == undefined)
