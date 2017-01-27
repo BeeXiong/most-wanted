@@ -10,9 +10,8 @@ function initSearch(people)
 			displayResults(NameSearchResults);
 			var decendentAnswer = promptForDecendents();
 			var decendents = [];
-			var i = 0;
 					if (decendentAnswer == "yes"){
-						decendents = initSearchForDecendents(people,NameSearchResults,decendents,i);
+						decendents = initSearchForDecendents(people,NameSearchResults, decendents);
 						displayResults(decendents);
 					}
 					else if (input == "no")
@@ -106,37 +105,41 @@ function identifyTraitSelection(traitToSearch){
 		initSearchByTraits(traitToSearch);
 		}
 }
-function initSearchForDecendents(people, resultsArray, emptyDecendents=[],i){//id maybe subbed for array
+function initSearchForDecendents(people, resultsArray, emptyDecendents,i = -1){
 var arraylength = resultsArray.length;
-
-	{if (resultsArray[i] == undefined){
-		return undefined;
+	{if (i >= arraylength){
+		return emptyDecendents;
 	}
 	else {
-		var searchedPerson = getSearchedResult(resultsArray, i);
-
-		var newArray = people.filter(function(person){//people might be an issue
+		var searchedPerson = getSearchedResult(resultsArray, i, arraylength);
+		var newArray = people.filter(function(person){
 			var parentsArray = person.parents;
-			var firstParentId = getFirstParentResult(parentsArray, i);
+			var firstParentId = getFirstParentResult(parentsArray);
 			var secondParentId = getSecondParentResult(parentsArray);
 			if((firstParentId == searchedPerson.id || secondParentId == searchedPerson.id)){
-				emptyDecendents.push(person);
 				return true;
 			}
 			else
 			{return false;}
 		});}
-
-		initSearchForDecendents(people, newArray, emptyDecendents,i);
-
-    return emptyDecendents;
+		i++;
+		emptyDecendents = emptyDecendents.concat(newArray);
+		return initSearchForDecendents(people, emptyDecendents, emptyDecendents,i);
 	}
 }
-function getSearchedResult(array,index){
-	if (array[index] == undefined){
-		return undefined;
-	}
-	else return array[index];
+function getSearchedResult(array, index, lengthOfArray){
+if(index < 0 && lengthOfArray>=index)
+		{
+		index = index + 1;
+		if (array[index] == undefined)
+				return undefined;
+		else return array[index];
+		}
+else
+		if (array[index] == undefined){
+			return undefined;
+		}
+		else return array[index];
 }
 function getFirstParentResult(array){
 	if (array[0] == undefined){
