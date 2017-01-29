@@ -10,18 +10,34 @@ function initSearch(people)
 			displayResults(NameSearchResults);
 			var decendentAnswer = promptForDecendents();
 			var decendents = [];
-					if (decendentAnswer == "yes"){
-						decendents = initSearchForDecendents(people,NameSearchResults, decendents);
-						displayResults(decendents);
-					}
-					else if (input == "no")
-					{
-						initSearch(people);
-					}
-					else
-					{
-					alert("Invalid Entry. Please try again.");
-					}
+			if (decendentAnswer == "yes"){
+				decendents = getGrandParents(people,NameSearchResults);
+				displayResults(decendents);
+			}
+			else if (input == "no")
+			{
+				initSearch(people);
+			}
+			else
+			{
+			alert("Invalid Entry. Please try again.");
+			}
+
+
+
+
+					// if (decendentAnswer == "yes"){
+					// 	decendents = initSearchForDecendents(people,NameSearchResults, decendents);
+					// 	displayResults(decendents);
+					// }
+					// else if (input == "no")
+					// {
+					// 	initSearch(people);
+					// }
+					// else
+					// {
+					// alert("Invalid Entry. Please try again.");
+					// }
 		}
 		else if(input == "no")
 		{
@@ -122,8 +138,7 @@ var arraylength = resultsArray.length;
 		emptyDecendents = emptyDecendents.concat(newArray);
 		return initSearchForDecendents(people, emptyDecendents, emptyDecendents,i);
 	}
-}
-function getSearchedResult(array, index, lengthOfArray){
+} function getSearchedResult(array, index, lengthOfArray){
 if(index < 0)
 		{
 		index = index + 1;
@@ -174,7 +189,11 @@ function promptForJob(){
 	return prompt("Please select the occupation to search for");
 }
 function displayResults(results){
+if (results == undefined)
+alert('We were unable to find any results.');
+else
 	var arrayLength = results.length;
+
 	for (let i = 0; i < arrayLength;i++)
 	{
 		var object = results[i];
@@ -188,26 +207,48 @@ function displayResults(results){
 		alert('Here are the results for your entry: \nFirst Name: ' + firstName + '\nLastName: ' + lastName + '\nAge: ' + age + '\nWeight: ' + weight + '\nEye Color: ' + eyeColor + '\nOccupation: ' + job );
 	}
 }
-function getParents(people, resultsArray, emptyparents, i = 2){//id maybe subbed for array
-	if (i < resultsArray){
-		return emptyparents;
+function getParents(people, resultsArray, i = 0){
+	var arrayLength = resultsArray.length;
+	if (i >= arrayLength){
+		return undefined;
 	}
-	else {
-		var searchedPerson = getSearchedResult(resultsArray);
+	else
+		var searchedPerson = getSearchedResult(resultsArray,i);
 		var parentsArray = searchedPerson.parents;
 		var firstParentId = getFirstResult(parentsArray);
 		var secondParentId = getSecondResult(parentsArray);
-		var newArray = people.filter(function(person){//people might be an issue
+		var newArray = people.filter(function(person){
 			if((firstParentId == person.id || secondParentId == person.id)){
 				return true;
 			}
 			else
 			{return false;}
 		});
-		emptyparents = emptyparents.concat(newArray);
-		return getParents(people, newArray, emptyparents);
-	}
+		return newArray;
 }
+	function getGrandParents(people, resultsArray, emptyArray = [], i = 0){
+		var parentsArray = getParents(people,resultsArray);
+		var arrayLength = parentsArray.length;
+		if(parentsArray[0] == undefined)
+			return undefined;
+		else
+			do{
+						var searchedPerson = getSearchedResult(parentsArray,i);
+						var grandParentsArray = searchedPerson.parents;
+						var firstParentId = getFirstResult(grandParentsArray);
+						var secondParentId = getSecondResult(grandParentsArray);
+						var newArray = people.filter(function(person){
+							if((firstParentId == person.id || secondParentId == person.id))
+								return true;
+							else
+								return false;
+						});
+						emptyArray = emptyArray.concat(newArray);
+						i++;
+				}
+				while (i < arrayLength);
+				return emptyArray;
+		}
 // function addSixTo(x){
 //   return x + 6;
 // }
