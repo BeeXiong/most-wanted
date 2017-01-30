@@ -4,40 +4,42 @@ function initSearch(people)
 	var input = prompt("Do you know the name of the person you are searching for?");
 		if(input == "yes")
 		{
-			var firstName = promptForFirstName();
-			var lastName = promptForLastName();
-			var NameSearchResults = initSearchByName(people,firstName,lastName);
-			displayResults(NameSearchResults);
-			var decendentAnswer = promptForDecendents();
-			var decendents = [];
-			if (decendentAnswer == "yes"){
-				decendents = getSiblings(people,NameSearchResults);
-				displayResults(decendents);
-			}
-			else if (input == "no")
-			{
-				initSearch(people);
-			}
-			else
-			{
-			alert("Invalid Entry. Please try again.");
-			}
-
-
-
-
-					// if (decendentAnswer == "yes"){
-					// 	decendents = initSearchForDecendents(people,NameSearchResults, decendents);
-					// 	displayResults(decendents);
-					// }
-					// else if (input == "no")
-					// {
-					// 	initSearch(people);
-					// }
-					// else
-					// {
-					// alert("Invalid Entry. Please try again.");
-					// }
+				var firstName = promptForFirstName();
+				var lastName = promptForLastName();
+				var NameSearchResults = initSearchByName(people,firstName,lastName);
+				displayResults(NameSearchResults);
+				if(NameSearchResults[0] != undefined){
+						var decendentAnswer = promptForDecendents();
+						var decendents = [];
+						if (decendentAnswer == "yes"){
+							decendents = initSearchForDecendents(people,NameSearchResults);
+							displayResults(decendents);
+						}
+						else if (input == "no")
+						{
+							initSearch(people);
+						}
+						else
+						{
+						alert("Invalid Entry. Please try again.");
+						}
+						var immediateFamily = promptForImmediateFamily();
+						if (decendentAnswer == "yes"){
+							immediateFamily = getImmediateFamily(people,NameSearchResults);
+							displayResults(immediateFamily);
+						}
+						else if (input == "no")
+						{
+							initSearch(people);
+						}
+						else
+						{
+						alert("Invalid Entry. Please try again.");
+						}
+					}
+				else {
+					alert('To begin a new Search, Please Click on the Start Searching Button');
+				}
 		}
 		else if(input == "no")
 		{
@@ -117,7 +119,7 @@ function identifyTraitSelection(traitToSearch){
 		initSearchByTraits(traitToSearch);
 		}
 }
-function initSearchForDecendents(people, resultsArray, emptyDecendents,i = -1){
+function initSearchForDecendents(people, resultsArray, emptyDecendents = [],i = -1){
 var arraylength = resultsArray.length;
 	{if (i >= arraylength){
 		return emptyDecendents;
@@ -162,31 +164,34 @@ function getSecondResult(array){
 	else return array[1];
 }
 function promptForFirstName(){
-	return prompt("Please type the First Name of the person.");
+	return prompt("Please type the First Name of the person.").toLowerCase();
 }
 function promptForLastName(){
-	return prompt("Please type the Last Name of the person");
+	return prompt("Please type the Last Name of the person").toLowerCase();
 }
 function promptForDecendents(){
-	return prompt("Would you like to see this person's decendents?");
+	return prompt("Would you like to see this person's decendents?").toLowerCase();
 }
 function promptForTraits(){
-	return prompt("Please select the Trait to search by\nAge\nHeight\nWeight\nEye Color\nJob ");
+	return prompt("Please select the Trait to search by\nAge\nHeight\nWeight\nEye Color\nJob ").toLowerCase();
 }
 function promptForAge(){
-	return prompt("Please select the age to search for");
+	return prompt("Please select the age to search for").toLowerCase();
 }
 function promptForHeight(){
-	return prompt("Please select the height to search for");
+	return prompt("Please select the height to search for").toLowerCase();
 }
 function promptForWeight(){
-	return prompt("Please select the weight to search for");
+	return prompt("Please select the weight to search for").toLowerCase();
 }
 function promptForEyeColor(){
-	return prompt("Please select the eye color to search for");
+	return prompt("Please select the eye color to search for").toLowerCase();
 }
 function promptForJob(){
-	return prompt("Please select the occupation to search for");
+	return prompt("Please select the occupation to search for").toLowerCase();
+}
+function promptForImmediateFamily(){
+	return prompt("Would you like to see their immediate family?").toLowerCase();
 }
 function displayResults(results){
 if (results == undefined || results[0] == undefined)
@@ -206,6 +211,21 @@ else
 		var job = object.occupation;
 		alert('Here are the results for your entry: \nFirst Name: ' + firstName + '\nLastName: ' + lastName + '\nAge: ' + age + '\nWeight: ' + weight + '\nEye Color: ' + eyeColor + '\nOccupation: ' + job );
 	}
+}
+function getImmediateFamily(people, resultsArray,emptyArray=[],i=0){
+		var parents = getParents(people, resultsArray);
+		if (parents != undefined)
+			emptyArray = emptyArray.concat(parents);
+		var spouse = getSpouse(people,resultsArray);
+		if (spouse != undefined)
+			emptyArray = emptyArray.concat(spouse);
+		var siblings = getSiblings(people, resultsArray);
+		if (siblings != undefined)
+			emptyArray = emptyArray.concat(siblings);
+		var children = getChildren(people, resultsArray);
+		if (children != undefined)
+			emptyArray = emptyArray.concat(children);
+		return emptyArray;
 }
 function getParents(people, resultsArray, i = 0){
 	var arrayLength = resultsArray.length;
@@ -291,20 +311,60 @@ function getParents(people, resultsArray, i = 0){
 }
 function getGrandChildren(people, resultsArray, emptyArray = [],i = 0){
 	var children = getChildren(people, resultsArray);
-	var arraylength = children.length;
-	var newArray = [];
+	if (children[0] == undefined)
+			return undefined;
+	else
+		var arraylength = children.length;
+		var newArray = [];
+		do{
+			var searchedPerson = getSearchedResult(children,i);
+			newArray = people.filter(function(person){
+					var parentsArray = person.parents;
+					var firstParentId = getFirstResult(parentsArray);
+					var secondParentId = getSecondResult(parentsArray);
+						if((searchedPerson.id == firstParentId || searchedPerson.id == secondParentId))
+							return true;
+						else
+							return false;
+			});
+			i++;
+		}
+		while (arraylength > i);
+		return newArray;
+}
+function getAuntUncle(people, resultsArray, emptyArray = [],i = 0){
+	var grandparents = getGrandParents(people, resultsArray);
+	if (grandparents == undefined)
+			return undefined;
+	else
+		var arraylength = grandparents.length;
+		var newArray = [];
+		var silbings =  getChildren(people, grandparents);
+		var parents = resultsArray[0].parents;
+		do{
+			var searchedPerson = getSearchedResult(parents,i);
+			return silbings.filter(function(person){
+				if((searchedPerson != person.id))
+				return true;
+				else
+				return false;
+			});
+		}
+		while (silbings > i);
+}
+function getNieceNephew(people, resultsArray, emptyArray = [], i=0){
+	var parentsArray = getParents(people,resultsArray);
+	if (parentsArray[0] == undefined)
+		return undefined;
+	var silbings = getChildren(people, parentsArray);
+	if (silbings[0] == undefined)
+		return undefined;
+	var arraylength = silbings.length;
 	do{
-		var searchedPerson = getSearchedResult(resultsArray,i);
-		newArray = people.filter(function(person){
-				var parentsArray = person.parents;
-				var firstParentId = getFirstResult(parentsArray);
-				var secondParentId = getSecondResult(parentsArray);
-					if((searchedPerson.id == firstParentId || searchedPerson.id == secondParentId))
-						return true;
-					else
-						return false;
-		});
+		var newArray = getChildren(people, silbings,emptyArray,i);
+		emptyArray = emptyArray.concat(newArray);
+		i++;
 	}
-	while (arraylength >= i);
-	return newArray;
+	while(arraylength > i);
+	return emptyArray;
 }
