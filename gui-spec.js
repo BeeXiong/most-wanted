@@ -4,10 +4,10 @@ describe('function getParents', function(){
   var joeyParents = [{id:313207561,firstName:"Mattias",lastName:"Madden",gender:"male",dob:"2/19/1966",height:70,weight:110,eyeColor:"blue",occupation:"assistant",parents:[693243224,888201200],currentSpouse:313997561},{id:313997561,firstName:"Ellen",lastName:"Madden",gender:"female",dob:"2/19/1970",height:67,weight:100,eyeColor:"blue",occupation:"doctor",parents:[],currentSpouse:313207561}];
   var billyBob = [{id:272822514,firstName:"Billy",lastName:"Bob",gender:"male",dob:"1/18/1949",height:71,weight:175,eyeColor:"brown",occupation:"programmer",parents:[],currentSpouse:401222887},];
   var emptyArray = [];
-  it('get parents', function(){
+  it('get joeys parents', function(){
     expect(getParents(data,joey)).toEqual(joeyParents);
   });
-  it('get parents', function(){
+  it('get billy bobs parents', function(){
       expect(getParents(data,billyBob)).toEqual(emptyArray);
   });
 });
@@ -34,10 +34,10 @@ describe('function getSpouse', function(){
   var jasmine = [{id:159819275,firstName:"Jasmine",lastName:"Bob",gender:"female",dob:"12/18/1969",height:58,weight:156,eyeColor:"blue",occupation:"assistant",parents:[409574486,260451248],currentSpouse:951747547}];
   var ralph = [{id:951747547,firstName:"Ralph",lastName:"Bob",gender:"male",dob:"12/23/1969",height:66,weight:179,eyeColor:"blue",occupation:"nurse",parents:[401222887],currentSpouse:159819275}];
   var emptyArray = [];
-  it('get getSpouse', function(){
+  it('get jasmines Spouse', function(){
     expect(getSpouse(data,jasmine)).toEqual(ralph);
   });
-  it('get getSpouse', function(){
+  it('get joeys Spouse', function(){
     expect(getSpouse(data,joey)).toEqual(emptyArray);
   });
 });
@@ -46,10 +46,10 @@ describe('function getChildren', function(){
   var joey = [{id:313998e3,firstName:"Joey",lastName:"Madden",gender:"female",dob:"2/02/1987",height:67,weight:100,eyeColor:"blue",occupation:"doctor",parents:[313207561,313997561],currentSpouse:null}];
   var joeyParents = [{id:313207561,firstName:"Mattias",lastName:"Madden",gender:"male",dob:"2/19/1966",height:70,weight:110,eyeColor:"blue",occupation:"assistant",parents:[693243224,888201200],currentSpouse:313997561},{id:313997561,firstName:"Ellen",lastName:"Madden",gender:"female",dob:"2/19/1970",height:67,weight:100,eyeColor:"blue",occupation:"doctor",parents:[],currentSpouse:313207561}];  var billyBob = [{id:272822514,firstName:"Billy",lastName:"Bob",gender:"male",dob:"1/18/1949",height:71,weight:175,eyeColor:"brown",occupation:"programmer",parents:[],currentSpouse:401222887},];
   var emptyArray = [];
-  it('get getChildren', function(){
+  it('getjoeys Parents Children', function(){
     expect(getChildren(data,joeyParents)).toEqual(joey);
   });
-  it('get getChildren', function(){
+  it('get Joeys Children', function(){
     expect(getChildren(data,joey)).toEqual(emptyArray);
   });
 });
@@ -60,13 +60,13 @@ describe('function getSiblings', function(){
   var mattiasSiblings = [{id:822843554,firstName:"Regina",lastName:"Madden",gender:"female",dob:"7/26/1959",height:71,weight:249,eyeColor:"brown",occupation:"nurse",parents:[693243224,888201200],currentSpouse:null},{id:819168108,firstName:"Hana",lastName:"Madden",gender:"female",dob:"10/7/1953",height:70,weight:187,eyeColor:"brown",occupation:"politician",parents:[693243224,888201200],currentSpouse:null},{id:969837479,firstName:"Eloise",lastName:"Madden",gender:"female",dob:"12/11/1961",height:63,weight:241,eyeColor:"brown",occupation:"assistant",parents:[693243224,888201200],currentSpouse:null}];
   var billyBob = [{id:272822514,firstName:"Billy",lastName:"Bob",gender:"male",dob:"1/18/1949",height:71,weight:175,eyeColor:"brown",occupation:"programmer",parents:[],currentSpouse:401222887},];
   var emptyArray = [];
-  it('get getSiblings', function(){
+  it('get Mattias getSiblings', function(){
     expect(getSiblings(data,mattias)).toEqual(mattiasSiblings);
   });
-  it('get getSiblings', function(){
+  it('get Joey getSiblings', function(){
     expect(getSiblings(data,joey)).toEqual(emptyArray);
   });
-  it('get getSiblings', function(){
+  it('get Billy Bob getSiblings', function(){
     expect(getSiblings(data,billyBob)).toEqual(emptyArray);
   });
 });
@@ -76,10 +76,10 @@ describe('function getGrandChildren', function(){
   var joeyGrandParents = [{id:693243224,firstName:"Joy",lastName:"Madden",gender:"female",dob:"4/20/1939",height:69,weight:199,eyeColor:"hazel",occupation:"doctor",parents:[],currentSpouse:null},{id:888201200,firstName:"Mader",lastName:"Madden",gender:"male",dob:"5/6/1937",height:76,weight:205,eyeColor:"black",occupation:"landscaper",parents:[],currentSpouse:null},];
   var billyBob = [{id:272822514,firstName:"Billy",lastName:"Bob",gender:"male",dob:"1/18/1949",height:71,weight:175,eyeColor:"brown",occupation:"programmer",parents:[],currentSpouse:401222887},];
   var emptyArray = [];
-    it('get getGrandChildren', function(){
+    it('get Joy and Mader getGrandChildren', function(){
       expect(getGrandChildren(data,joeyGrandParents,emptyArray)).toEqual(joey);
     });
-    it('get grandparents', function(){
+    it('get Billy Bob getGrandChildren', function(){
       expect(getGrandChildren(data,billyBob,emptyArray)).toEqual(emptyArray);
     });
   });
@@ -89,10 +89,10 @@ describe('function getAuntUncle', function(){
   var mattiasSiblings = [{id:822843554,firstName:"Regina",lastName:"Madden",gender:"female",dob:"7/26/1959",height:71,weight:249,eyeColor:"brown",occupation:"nurse",parents:[693243224,888201200],currentSpouse:null},{id:819168108,firstName:"Hana",lastName:"Madden",gender:"female",dob:"10/7/1953",height:70,weight:187,eyeColor:"brown",occupation:"politician",parents:[693243224,888201200],currentSpouse:null},{id:969837479,firstName:"Eloise",lastName:"Madden",gender:"female",dob:"12/11/1961",height:63,weight:241,eyeColor:"brown",occupation:"assistant",parents:[693243224,888201200],currentSpouse:null}];
   var billyBob = [{id:272822514,firstName:"Billy",lastName:"Bob",gender:"male",dob:"1/18/1949",height:71,weight:175,eyeColor:"brown",occupation:"programmer",parents:[],currentSpouse:401222887},];
   var emptyArray = [];
-  it('get getAuntUncle', function(){
+  it('get Joey getAuntUncle', function(){
     expect(getAuntUncle(data,joey,emptyArray)).toEqual(mattiasSiblings);
   });
-  it('get getAuntUncle', function(){
+  it('get Billy Bob getAuntUncle', function(){
     expect(getAuntUncle(data,billyBob,emptyArray)).toEqual(emptyArray);
   });
   });
@@ -102,10 +102,10 @@ describe('function getNieceNephew', function(){
   var regina = [{id:822843554,firstName:"Regina",lastName:"Madden",gender:"female",dob:"7/26/1959",height:71,weight:249,eyeColor:"brown",occupation:"nurse",parents:[693243224,888201200],currentSpouse:null}];
   var billyBob = [{id:272822514,firstName:"Billy",lastName:"Bob",gender:"male",dob:"1/18/1949",height:71,weight:175,eyeColor:"brown",occupation:"programmer",parents:[],currentSpouse:401222887},];
   var emptyArray = [];
-  it('get getNieceNephew', function(){
+  it('get Regina getNieceNephew', function(){
     expect(getNieceNephew(data,regina,emptyArray)).toEqual(joey);
   });
-  it('get getNieceNephew', function(){
+  it('get Billy Bob getNieceNephew', function(){
     expect(getNieceNephew(data,billyBob,emptyArray)).toEqual(emptyArray);
   });
   });
@@ -116,10 +116,10 @@ describe('function getImmediateFamily', function(){
   var mattias = [{id:313207561,firstName:"Mattias",lastName:"Madden",gender:"male",dob:"2/19/1966",height:70,weight:110,eyeColor:"blue",occupation:"assistant",parents:[693243224,888201200],currentSpouse:313997561}];
   var uma = [{id:401222887,firstName:"Uma",lastName:"Bob",gender:"female",dob:"4/1/1947",height:65,weight:162,eyeColor:"brown",occupation:"assistant",parents:[],currentSpouse:272822514}];
   var emptyArray = [];
-  it('get getImmediateFamily', function(){
+  it('get Mattias getImmediateFamily', function(){
     expect(getImmediateFamily(data,mattias,emptyArray)).toEqual(mattiasFamily);
     });
-  it('get getImmediateFamily', function(){
+  it('get Billy Bob getImmediateFamily', function(){
     expect(getImmediateFamily(data,billyBob,emptyArray)).toEqual(uma);
     });
   });
@@ -127,12 +127,14 @@ describe('function initSearchByName', function(){
   var data=[{id:272822514,firstName:"Billy",lastName:"Bob",gender:"male",dob:"1/18/1949",height:71,weight:175,eyeColor:"brown",occupation:"programmer",parents:[],currentSpouse:401222887},{id:401222887,firstName:"Uma",lastName:"Bob",gender:"female",dob:"4/1/1947",height:65,weight:162,eyeColor:"brown",occupation:"assistant",parents:[],currentSpouse:272822514},{id:409574486,firstName:"Michael",lastName:"Walkens",gender:"male",dob:"5/9/1951",height:76,weight:250,eyeColor:"brown",occupation:"landscaper",parents:[],currentSpouse:260451248},{id:260451248,firstName:"Jon",lastName:"Walkens",gender:"male",dob:"9/6/1945",height:62,weight:115,eyeColor:"brown",occupation:"assistant",parents:[],currentSpouse:409574486},{id:629807187,firstName:"Jack",lastName:"Pafoy",gender:"male",dob:"3/16/1938",height:70,weight:207,eyeColor:"black",occupation:"nurse",parents:[],currentSpouse:464142841},{id:464142841,firstName:"Jen",lastName:"Pafoy",gender:"female",dob:"4/10/1940",height:72,weight:256,eyeColor:"black",occupation:"student",parents:[],currentSpouse:629807187},{id:982411429,firstName:"Mister",lastName:"Potatoo",gender:"male",dob:"12/18/1952",height:66,weight:170,eyeColor:"hazel",occupation:"architect",parents:[],currentSpouse:595767575},{id:595767575,firstName:"Missuz",lastName:"Potatoo",gender:"female",dob:"10/28/1948",height:59,weight:137,eyeColor:"blue",occupation:"architect",parents:[],currentSpouse:982411429},{id:693243224,firstName:"Joy",lastName:"Madden",gender:"female",dob:"4/20/1939",height:69,weight:199,eyeColor:"hazel",occupation:"doctor",parents:[],currentSpouse:null},{id:888201200,firstName:"Mader",lastName:"Madden",gender:"male",dob:"5/6/1937",height:76,weight:205,eyeColor:"black",occupation:"landscaper",parents:[],currentSpouse:null},{id:878013758,firstName:"Jill",lastName:"Pafoy",gender:"female",dob:"2/8/1972",height:74,weight:118,eyeColor:"brown",occupation:"programmer",parents:[401222887],currentSpouse:294874671},{id:951747547,firstName:"Ralph",lastName:"Bob",gender:"male",dob:"12/23/1969",height:66,weight:179,eyeColor:"blue",occupation:"nurse",parents:[401222887],currentSpouse:159819275},{id:159819275,firstName:"Jasmine",lastName:"Bob",gender:"female",dob:"12/18/1969",height:58,weight:156,eyeColor:"blue",occupation:"assistant",parents:[409574486,260451248],currentSpouse:951747547},{id:348457184,firstName:"Annie",lastName:"Pafoy",gender:"female",dob:"11/4/1970",height:62,weight:235,eyeColor:"hazel",occupation:"landscaper",parents:[629807187,464142841],currentSpouse:null},{id:294874671,firstName:"Dave",lastName:"Pafoy",gender:"male",dob:"8/5/1967",height:61,weight:112,eyeColor:"green",occupation:"doctor",parents:[629807187,464142841],currentSpouse:878013758},{id:931247228,firstName:"Amii",lastName:"Pafoy",gender:"female",dob:"3/13/1963",height:74,weight:184,eyeColor:"brown",occupation:"landscaper",parents:[629807187,464142841],currentSpouse:null},{id:822843554,firstName:"Regina",lastName:"Madden",gender:"female",dob:"7/26/1959",height:71,weight:249,eyeColor:"brown",occupation:"nurse",parents:[693243224,888201200],currentSpouse:null},{id:819168108,firstName:"Hana",lastName:"Madden",gender:"female",dob:"10/7/1953",height:70,weight:187,eyeColor:"brown",occupation:"politician",parents:[693243224,888201200],currentSpouse:null},{id:969837479,firstName:"Eloise",lastName:"Madden",gender:"female",dob:"12/11/1961",height:63,weight:241,eyeColor:"brown",occupation:"assistant",parents:[693243224,888201200],currentSpouse:null},{id:313207561,firstName:"Mattias",lastName:"Madden",gender:"male",dob:"2/19/1966",height:70,weight:110,eyeColor:"blue",occupation:"assistant",parents:[693243224,888201200],currentSpouse:313997561},{id:313997561,firstName:"Ellen",lastName:"Madden",gender:"female",dob:"2/19/1970",height:67,weight:100,eyeColor:"blue",occupation:"doctor",parents:[],currentSpouse:313207561},{id:313998e3,firstName:"Joey",lastName:"Madden",gender:"female",dob:"2/02/1987",height:67,weight:100,eyeColor:"blue",occupation:"doctor",parents:[313207561,313997561],currentSpouse:null}];
   var firstName = 'Billy';
   var lastName = 'Bob';
+  var noDataFirstName = 'Turkey';
   var billyBob = [{id:272822514,firstName:"Billy",lastName:"Bob",gender:"male",dob:"1/18/1949",height:71,weight:175,eyeColor:"brown",occupation:"programmer",parents:[],currentSpouse:401222887},];
-  it('get search by name', function(){
+    var emptyArray = [];
+  it('get Billy Bob search by name', function(){
     expect(initSearchByName(data,firstName,lastName)).toEqual(billyBob);
     });
   it('get search by name', function(){
-    expect(initSearchByName(data,firstName,lastName)).toEqual(billyBob);
+    expect(initSearchByName(data,noDataFirstName,lastName)).toEqual(emptyArray);
     });
 });
 describe('function initSearchForDecendents', function(){
@@ -141,10 +143,24 @@ describe('function initSearchForDecendents', function(){
   var mader = [{id:888201200,firstName:"Mader",lastName:"Madden",gender:"male",dob:"5/6/1937",height:76,weight:205,eyeColor:"black",occupation:"landscaper",parents:[],currentSpouse:null},];
   var maderDecendents = [{id:822843554,firstName:"Regina",lastName:"Madden",gender:"female",dob:"7/26/1959",height:71,weight:249,eyeColor:"brown",occupation:"nurse",parents:[693243224,888201200],currentSpouse:null},{id:819168108,firstName:"Hana",lastName:"Madden",gender:"female",dob:"10/7/1953",height:70,weight:187,eyeColor:"brown",occupation:"politician",parents:[693243224,888201200],currentSpouse:null},{id:969837479,firstName:"Eloise",lastName:"Madden",gender:"female",dob:"12/11/1961",height:63,weight:241,eyeColor:"brown",occupation:"assistant",parents:[693243224,888201200],currentSpouse:null},{id:313207561,firstName:"Mattias",lastName:"Madden",gender:"male",dob:"2/19/1966",height:70,weight:110,eyeColor:"blue",occupation:"assistant",parents:[693243224,888201200],currentSpouse:313997561},{id:313998e3,firstName:"Joey",lastName:"Madden",gender:"female",dob:"2/02/1987",height:67,weight:100,eyeColor:"blue",occupation:"doctor",parents:[313207561,313997561],currentSpouse:null}];
   var emptyArray = [];
-  it('get initSearchForDecendents', function(){
+  it('get Billy Bob list of Decendents', function(){
     expect(initSearchForDecendents(data, billyBob)).toEqual(emptyArray);
   });
-  it('get initSearchForDecendents', function(){
+  it('get Mader list of Decendents', function(){
     expect(initSearchForDecendents(data, mader)).toEqual(maderDecendents);
   });
+});
+describe('function getBirthdayYear', function(){
+  var birthday = '07/05/1985';
+  var cvtBirthday = 1985;
+  it('get 1985 birth year', function(){
+    expect(getBirthdayYear(birthday)).toEqual(cvtBirthday);
+  });
+});
+  describe('function convertPersonAge', function(){
+  var data=[{id:272822514,firstName:"Billy",lastName:"Bob",gender:"male",dob:"1/18/1949",height:71,weight:175,eyeColor:"brown",occupation:"programmer",parents:[],currentSpouse:401222887},{id:401222887,firstName:"Uma",lastName:"Bob",gender:"female",dob:"4/1/1947",height:65,weight:162,eyeColor:"brown",occupation:"assistant",parents:[],currentSpouse:272822514},{id:409574486,firstName:"Michael",lastName:"Walkens",gender:"male",dob:"5/9/1951",height:76,weight:250,eyeColor:"brown",occupation:"landscaper",parents:[],currentSpouse:260451248},{id:260451248,firstName:"Jon",lastName:"Walkens",gender:"male",dob:"9/6/1945",height:62,weight:115,eyeColor:"brown",occupation:"assistant",parents:[],currentSpouse:409574486},{id:629807187,firstName:"Jack",lastName:"Pafoy",gender:"male",dob:"3/16/1938",height:70,weight:207,eyeColor:"black",occupation:"nurse",parents:[],currentSpouse:464142841},{id:464142841,firstName:"Jen",lastName:"Pafoy",gender:"female",dob:"4/10/1940",height:72,weight:256,eyeColor:"black",occupation:"student",parents:[],currentSpouse:629807187},{id:982411429,firstName:"Mister",lastName:"Potatoo",gender:"male",dob:"12/18/1952",height:66,weight:170,eyeColor:"hazel",occupation:"architect",parents:[],currentSpouse:595767575},{id:595767575,firstName:"Missuz",lastName:"Potatoo",gender:"female",dob:"10/28/1948",height:59,weight:137,eyeColor:"blue",occupation:"architect",parents:[],currentSpouse:982411429},{id:693243224,firstName:"Joy",lastName:"Madden",gender:"female",dob:"4/20/1939",height:69,weight:199,eyeColor:"hazel",occupation:"doctor",parents:[],currentSpouse:null},{id:888201200,firstName:"Mader",lastName:"Madden",gender:"male",dob:"5/6/1937",height:76,weight:205,eyeColor:"black",occupation:"landscaper",parents:[],currentSpouse:null},{id:878013758,firstName:"Jill",lastName:"Pafoy",gender:"female",dob:"2/8/1972",height:74,weight:118,eyeColor:"brown",occupation:"programmer",parents:[401222887],currentSpouse:294874671},{id:951747547,firstName:"Ralph",lastName:"Bob",gender:"male",dob:"12/23/1969",height:66,weight:179,eyeColor:"blue",occupation:"nurse",parents:[401222887],currentSpouse:159819275},{id:159819275,firstName:"Jasmine",lastName:"Bob",gender:"female",dob:"12/18/1969",height:58,weight:156,eyeColor:"blue",occupation:"assistant",parents:[409574486,260451248],currentSpouse:951747547}];
+  var cvtdata=[{id:272822514,firstName:"Billy",lastName:"Bob",gender:"male",dob:68,height:71,weight:175,eyeColor:"brown",occupation:"programmer",parents:[],currentSpouse:401222887},{id:401222887,firstName:"Uma",lastName:"Bob",gender:"female",dob:70,height:65,weight:162,eyeColor:"brown",occupation:"assistant",parents:[],currentSpouse:272822514},{id:409574486,firstName:"Michael",lastName:"Walkens",gender:"male",dob:66,height:76,weight:250,eyeColor:"brown",occupation:"landscaper",parents:[],currentSpouse:260451248},{id:260451248,firstName:"Jon",lastName:"Walkens",gender:"male",dob:72,height:62,weight:115,eyeColor:"brown",occupation:"assistant",parents:[],currentSpouse:409574486},{id:629807187,firstName:"Jack",lastName:"Pafoy",gender:"male",dob:79,height:70,weight:207,eyeColor:"black",occupation:"nurse",parents:[],currentSpouse:464142841},{id:464142841,firstName:"Jen",lastName:"Pafoy",gender:"female",dob:77,height:72,weight:256,eyeColor:"black",occupation:"student",parents:[],currentSpouse:629807187},{id:982411429,firstName:"Mister",lastName:"Potatoo",gender:"male",dob:65,height:66,weight:170,eyeColor:"hazel",occupation:"architect",parents:[],currentSpouse:595767575},{id:595767575,firstName:"Missuz",lastName:"Potatoo",gender:"female",dob:69,height:59,weight:137,eyeColor:"blue",occupation:"architect",parents:[],currentSpouse:982411429},{id:693243224,firstName:"Joy",lastName:"Madden",gender:"female",dob:78,height:69,weight:199,eyeColor:"hazel",occupation:"doctor",parents:[],currentSpouse:null},{id:888201200,firstName:"Mader",lastName:"Madden",gender:"male",dob:80,height:76,weight:205,eyeColor:"black",occupation:"landscaper",parents:[],currentSpouse:null},{id:878013758,firstName:"Jill",lastName:"Pafoy",gender:"female",dob:45,height:74,weight:118,eyeColor:"brown",occupation:"programmer",parents:[401222887],currentSpouse:294874671},{id:951747547,firstName:"Ralph",lastName:"Bob",gender:"male",dob:48,height:66,weight:179,eyeColor:"blue",occupation:"nurse",parents:[401222887],currentSpouse:159819275},{id:159819275,firstName:"Jasmine",lastName:"Bob",gender:"female",dob:48,height:58,weight:156,eyeColor:"blue",occupation:"assistant",parents:[409574486,260451248],currentSpouse:951747547}];
+    it('get mapped array with ages', function(){
+      expect(convertPersonAge(data)).toEqual(cvtdata);
+    });
 });

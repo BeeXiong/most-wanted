@@ -141,9 +141,7 @@ var arraylength = resultsArray.length;
 		var searchedPerson = getSearchedResult(resultsArray, i, arraylength);
 		var newArray = people.filter(function(person){
 			var parentsArray = person.parents;
-			var firstParentId = parentsArray[0];//getFirstResult(parentsArray);
-			var secondParentId = parentsArray[1];//getSecondResult(parentsArray);
-			if((firstParentId == searchedPerson.id || secondParentId == searchedPerson.id)){
+			if((parentsArray[0] == searchedPerson.id || parentsArray[1] == searchedPerson.id)){
 				return true;
 			}
 			else
@@ -153,7 +151,8 @@ var arraylength = resultsArray.length;
 		emptyDecendents = emptyDecendents.concat(newArray);
 		return initSearchForDecendents(people, emptyDecendents, emptyDecendents,i);
 	}
-} function getSearchedResult(array, index, lengthOfArray){
+}
+function getSearchedResult(array, index, lengthOfArray){
 if(index < 0)
 		{
 		index = index + 1;
@@ -166,16 +165,6 @@ else
 				return undefined;
 		else return array[index];
 }
-// function getFirstResult(array){
-// 	if (array[0] == undefined)
-// 			return undefined;
-// 	else return array[0];
-// }
-// function getSecondResult(array){
-// 	if (array[1] == undefined)
-// 			return undefined;
-// 	else return array[1];
-// }
 function promptForFirstName(){
 	return prompt("Please type the First Name of the person.").toLowerCase();
 }
@@ -278,12 +267,10 @@ function getParents(people, resultsArray, i = 0){
 		return emptyArray;
 	}
 	else
-		var searchedPerson = resultsArray[i];//getSearchedResult(resultsArray,i);
+		var searchedPerson = resultsArray[i];
 		var parentsArray = searchedPerson.parents;
-		var firstParentId = parentsArray[0];//getFirstResult(parentsArray);
-		var secondParentId = parentsArray[1];//getSecondResult(parentsArray);
 		var newArray = people.filter(function(person){
-			if((firstParentId == person.id || secondParentId == person.id)){
+			if((parentsArray[0] == person.id || parentsArray[1] == person.id)){
 				return true;
 			}
 			else
@@ -298,12 +285,10 @@ function getParents(people, resultsArray, i = 0){
 			return emptyArray;
 		else
 			do{
-						var searchedPerson = parentsArray[i];//getSearchedResult(parentsArray,i);
+						var searchedPerson = parentsArray[i];
 						var grandParentsArray = searchedPerson.parents;
-						var firstParentId = grandParentsArray[0];//getFirstResult(grandParentsArray);
-						var secondParentId = grandParentsArray[1];//getSecondResult(grandParentsArray);
 						var newArray = people.filter(function(person){
-							if((firstParentId == person.id || secondParentId == person.id))
+							if((grandParentsArray[0] == person.id || grandParentsArray[1] == person.id))
 								return true;
 							else
 								return false;
@@ -328,11 +313,9 @@ function getParents(people, resultsArray, i = 0){
 			function getChildren(people, resultsArray, emptyArray = [], i=0){
 				var arraylength = resultsArray.length;
 				var newArray = [];
-				var searchedPerson = resultsArray[i];//getSearchedResult(resultsArray,i);
+				var searchedPerson = resultsArray[i];
 				newArray = people.filter(function(person){
 						var parentsArray = person.parents;
-						// var firstParentId = parentsArray[0];//getFirstResult(parentsArray);
-						// var secondParentId = parentsArray[0];//getSecondResult(parentsArray);
 							if((searchedPerson.id == parentsArray[0] || searchedPerson.id == parentsArray[1]))
 								return true;
 							else
@@ -347,7 +330,7 @@ function getParents(people, resultsArray, i = 0){
 			return emptyArray;
 		else
 			var silbings =  getChildren(people, parentsArray);
-			var searchedPerson = getSearchedResult(resultsArray,i);
+			var searchedPerson = resultsArray[i];
 			return silbings.filter(function(person){
 				if((searchedPerson.id != person.id))
 				return true;
@@ -366,9 +349,7 @@ function getGrandChildren(people, resultsArray, emptyArray = [],i = 0){
 			var searchedPerson = getSearchedResult(children,i);
 			newArray = people.filter(function(person){
 					var parentsArray = person.parents;
-					var firstParentId = parentsArray[0];//getFirstResult(parentsArray);
-					var secondParentId = parentsArray[1];//getSecondResult(parentsArray);
-						if((searchedPerson.id == firstParentId || searchedPerson.id == secondParentId))
+						if((searchedPerson.id == parentsArray[0] || searchedPerson.id == parentsArray[1]))
 							return true;
 						else
 							return false;
