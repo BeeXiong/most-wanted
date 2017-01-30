@@ -11,7 +11,7 @@ function initSearch(people)
 			var decendentAnswer = promptForDecendents();
 			var decendents = [];
 			if (decendentAnswer == "yes"){
-				decendents = getGrandParents(people,NameSearchResults);
+				decendents = getChildren(people,NameSearchResults);
 				displayResults(decendents);
 			}
 			else if (input == "no")
@@ -189,8 +189,8 @@ function promptForJob(){
 	return prompt("Please select the occupation to search for");
 }
 function displayResults(results){
-if (results == undefined)
-alert('We were unable to find any results.');
+if (results == undefined || results[0] == undefined)
+alert('We were unable to find any results.\n\nTo begin a new Search, Please Click on the Start Searching Button');
 else
 	var arrayLength = results.length;
 
@@ -249,6 +249,41 @@ function getParents(people, resultsArray, i = 0){
 				while (i < arrayLength);
 				return emptyArray;
 		}
+		function getSpouse(people, resultsArray, i = 0){
+				var searchedPerson = getSearchedResult(resultsArray,i);
+				if (searchedPerson.currentSpouse == null)
+					return undefined;
+				else
+					return people.filter(function(person){
+						if((searchedPerson.currentSpouse == person.id)){
+							return true;
+						}});
+			}
+			function getChildren(people, resultsArray, emptyArray = [], i=0){
+			var arraylength = resultsArray.length;
+			var newArray = [];
+				// if (i >= arraylength)
+				// 	return undefined;
+				// else
+					// do{
+								var searchedPerson = getSearchedResult(resultsArray,i);
+								newArray = people.filter(function(person){
+									var parentsArray = person.parents;
+									var firstParentId = getFirstResult(parentsArray);
+									var secondParentId = getSecondResult(parentsArray);
+
+										if((searchedPerson.id == firstParentId || searchedPerson.id == secondParentId))
+											return true;
+										else
+											return false;
+
+								});
+								emptyArray = emptyArray.concat(newArray);
+								// i++;
+						// }
+						// while (i < arraylength);
+						return emptyArray;
+	}
 // function addSixTo(x){
 //   return x + 6;
 // }
