@@ -12,38 +12,38 @@ function initSearch(people)
 						var decendentAnswer = promptForDecendents();
 						var decendents = [];
 						if (decendentAnswer == "yes"){
-							decendents = initSearchForDecendents(people,NameSearchResults);
-							displayResults(decendents);
+								decendents = initSearchForDecendents(people,NameSearchResults);
+								displayResults(decendents);
+								var immediateFamilyAnwser = promptForImmediateFamily();
+								if (immediateFamilyAnwser == "yes"){
+										var immediateFamily = getImmediateFamily(people,NameSearchResults);
+										displayResults(immediateFamily);
+										var nextOfKinAnswer = promptForNextOfKin();
+										if (nextOfKinAnswer == "yes"){
+											var nextOfKin = getNextOfKin(people,NameSearchResults);
+											displayResults(nextOfKin);
+										}
+										else if (nextOfKinAnswer == "no")
+										{
+											alert('To begin a new Search, Please Click on the Start Searching Button');
+										}
+										else
+										{
+										alert("Invalid Entry. Please try again.");
+										}
+								}
+								else if (immediateFamilyAnwser == "no")
+								{
+									alert('To begin a new Search, Please Click on the Start Searching Button');
+								}
+								else
+								{
+								alert("Invalid Entry. Please try again.");
+								}
 						}
-						else if (input == "no")
+						else if (decendentAnswer == "no")
 						{
-							initSearch(people);
-						}
-						else
-						{
-						alert("Invalid Entry. Please try again.");
-						}
-						var immediateFamilyAnwser = promptForImmediateFamily();
-						if (immediateFamilyAnwser == "yes"){
-							var immediateFamily = getImmediateFamily(people,NameSearchResults);
-							displayResults(immediateFamily);
-						}
-						else if (input == "no")
-						{
-							initSearch(people);
-						}
-						else
-						{
-						alert("Invalid Entry. Please try again.");
-						}
-						var nextOfKinAnswer = promptForNextOfKin();
-						if (nextOfKinAnswer == "yes"){
-							var nextOfKin = getNextOfKin(people,NameSearchResults);
-							displayResults(nextOfKin);
-						}
-						else if (input == "no")
-						{
-							initSearch(people);
+							alert('To begin a new Search, Please Click on the Start Searching Button');
 						}
 						else
 						{
@@ -111,7 +111,7 @@ function getBirthdayYear(personBirthday){
 	return Number(stringBirthdayYear);
 }
 function identifyTraitSelection(traitToSearch){
-	switch (traitToSearch){//while loop for multiple search
+	switch (traitToSearch){
 		case "age":{
 			return promptForAge();
 		}
@@ -141,8 +141,8 @@ var arraylength = resultsArray.length;
 		var searchedPerson = getSearchedResult(resultsArray, i, arraylength);
 		var newArray = people.filter(function(person){
 			var parentsArray = person.parents;
-			var firstParentId = getFirstResult(parentsArray);
-			var secondParentId = getSecondResult(parentsArray);
+			var firstParentId = parentsArray[0];//getFirstResult(parentsArray);
+			var secondParentId = parentsArray[1];//getSecondResult(parentsArray);
 			if((firstParentId == searchedPerson.id || secondParentId == searchedPerson.id)){
 				return true;
 			}
@@ -166,16 +166,16 @@ else
 				return undefined;
 		else return array[index];
 }
-function getFirstResult(array){
-	if (array[0] == undefined)
-			return undefined;
-	else return array[0];
-}
-function getSecondResult(array){
-	if (array[1] == undefined)
-			return undefined;
-	else return array[1];
-}
+// function getFirstResult(array){
+// 	if (array[0] == undefined)
+// 			return undefined;
+// 	else return array[0];
+// }
+// function getSecondResult(array){
+// 	if (array[1] == undefined)
+// 			return undefined;
+// 	else return array[1];
+// }
 function promptForFirstName(){
 	return prompt("Please type the First Name of the person.").toLowerCase();
 }
@@ -269,21 +269,19 @@ function getNextOfKin(people, resultsArray,emptyArray=[],i=0){
 		var auntUncle = getAuntUncle(people, resultsArray);
 		if (auntUncle != undefined)
 			emptyArray = emptyArray.concat(auntUncle);
-
-
-
 		return emptyArray;
 }
 function getParents(people, resultsArray, i = 0){
 	var arrayLength = resultsArray.length;
 	if (i >= arrayLength){
-		return undefined;
+		var emptyArray = [];
+		return emptyArray;
 	}
 	else
-		var searchedPerson = getSearchedResult(resultsArray,i);
+		var searchedPerson = resultsArray[i];//getSearchedResult(resultsArray,i);
 		var parentsArray = searchedPerson.parents;
-		var firstParentId = getFirstResult(parentsArray);
-		var secondParentId = getSecondResult(parentsArray);
+		var firstParentId = parentsArray[0];//getFirstResult(parentsArray);
+		var secondParentId = parentsArray[1];//getSecondResult(parentsArray);
 		var newArray = people.filter(function(person){
 			if((firstParentId == person.id || secondParentId == person.id)){
 				return true;
@@ -297,13 +295,13 @@ function getParents(people, resultsArray, i = 0){
 		var parentsArray = getParents(people,resultsArray);
 		var arrayLength = parentsArray.length;
 		if(parentsArray[0] == undefined)
-			return undefined;
+			return emptyArray;
 		else
 			do{
-						var searchedPerson = getSearchedResult(parentsArray,i);
+						var searchedPerson = parentsArray[i];//getSearchedResult(parentsArray,i);
 						var grandParentsArray = searchedPerson.parents;
-						var firstParentId = getFirstResult(grandParentsArray);
-						var secondParentId = getSecondResult(grandParentsArray);
+						var firstParentId = grandParentsArray[0];//getFirstResult(grandParentsArray);
+						var secondParentId = grandParentsArray[1];//getSecondResult(grandParentsArray);
 						var newArray = people.filter(function(person){
 							if((firstParentId == person.id || secondParentId == person.id))
 								return true;
@@ -318,23 +316,24 @@ function getParents(people, resultsArray, i = 0){
 		}
 		function getSpouse(people, resultsArray, i = 0){
 				var searchedPerson = getSearchedResult(resultsArray,i);
-				if (searchedPerson.currentSpouse == null)
-					return undefined;
+				if (searchedPerson.currentSpouse == null){
+					var emptyArray = [];
+					return emptyArray;}
 				else
 					return people.filter(function(person){
-						if((searchedPerson.currentSpouse == person.id)){
-							return true;
-						}});
+						if((searchedPerson.currentSpouse == person.id))
+						return true;
+					});
 			}
 			function getChildren(people, resultsArray, emptyArray = [], i=0){
 				var arraylength = resultsArray.length;
 				var newArray = [];
-				var searchedPerson = getSearchedResult(resultsArray,i);
+				var searchedPerson = resultsArray[i];//getSearchedResult(resultsArray,i);
 				newArray = people.filter(function(person){
 						var parentsArray = person.parents;
-						var firstParentId = getFirstResult(parentsArray);
-						var secondParentId = getSecondResult(parentsArray);
-							if((searchedPerson.id == firstParentId || searchedPerson.id == secondParentId))
+						// var firstParentId = parentsArray[0];//getFirstResult(parentsArray);
+						// var secondParentId = parentsArray[0];//getSecondResult(parentsArray);
+							if((searchedPerson.id == parentsArray[0] || searchedPerson.id == parentsArray[1]))
 								return true;
 							else
 								return false;
@@ -345,7 +344,7 @@ function getParents(people, resultsArray, i = 0){
 	function getSiblings(people, resultsArray, emptyArray = [], i=0){
 		var parentsArray = getParents(people,resultsArray);
 		if (parentsArray[0] == undefined)
-			return undefined;
+			return emptyArray;
 		else
 			var silbings =  getChildren(people, parentsArray);
 			var searchedPerson = getSearchedResult(resultsArray,i);
@@ -359,7 +358,7 @@ function getParents(people, resultsArray, i = 0){
 function getGrandChildren(people, resultsArray, emptyArray = [],i = 0){
 	var children = getChildren(people, resultsArray);
 	if (children[0] == undefined)
-			return undefined;
+			return emptyArray;
 	else
 		var arraylength = children.length;
 		var newArray = [];
@@ -367,8 +366,8 @@ function getGrandChildren(people, resultsArray, emptyArray = [],i = 0){
 			var searchedPerson = getSearchedResult(children,i);
 			newArray = people.filter(function(person){
 					var parentsArray = person.parents;
-					var firstParentId = getFirstResult(parentsArray);
-					var secondParentId = getSecondResult(parentsArray);
+					var firstParentId = parentsArray[0];//getFirstResult(parentsArray);
+					var secondParentId = parentsArray[1];//getSecondResult(parentsArray);
 						if((searchedPerson.id == firstParentId || searchedPerson.id == secondParentId))
 							return true;
 						else
@@ -381,8 +380,8 @@ function getGrandChildren(people, resultsArray, emptyArray = [],i = 0){
 }
 function getAuntUncle(people, resultsArray, emptyArray = [],i = 0){
 	var grandparents = getGrandParents(people, resultsArray);
-	if (grandparents == undefined)
-			return undefined;
+	if (grandparents[0] == undefined)
+			return emptyArray;
 	else
 		var arraylength = grandparents.length;
 		var newArray = [];
@@ -402,7 +401,7 @@ function getAuntUncle(people, resultsArray, emptyArray = [],i = 0){
 function getNieceNephew(people, resultsArray, emptyArray = [], i=0){
 	var parentsArray = getParents(people,resultsArray);
 	if (parentsArray[0] == undefined)
-		return undefined;
+		return emptyArray;
 	var silbings = getChildren(people, parentsArray);
 	if (silbings[0] == undefined)
 		return undefined;
