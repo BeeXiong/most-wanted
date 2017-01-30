@@ -23,10 +23,23 @@ function initSearch(people)
 						{
 						alert("Invalid Entry. Please try again.");
 						}
-						var immediateFamily = promptForImmediateFamily();
-						if (decendentAnswer == "yes"){
-							immediateFamily = getImmediateFamily(people,NameSearchResults);
+						var immediateFamilyAnwser = promptForImmediateFamily();
+						if (immediateFamilyAnwser == "yes"){
+							var immediateFamily = getImmediateFamily(people,NameSearchResults);
 							displayResults(immediateFamily);
+						}
+						else if (input == "no")
+						{
+							initSearch(people);
+						}
+						else
+						{
+						alert("Invalid Entry. Please try again.");
+						}
+						var nextOfKinAnswer = promptForNextOfKin();
+						if (nextOfKinAnswer == "yes"){
+							var nextOfKin = getNextOfKin(people,NameSearchResults);
+							displayResults(nextOfKin);
 						}
 						else if (input == "no")
 						{
@@ -193,6 +206,9 @@ function promptForJob(){
 function promptForImmediateFamily(){
 	return prompt("Would you like to see their immediate family?").toLowerCase();
 }
+function promptForNextOfKin(){
+	return prompt("Would you like to see their Next Of Kin?").toLowerCase();
+}
 function displayResults(results){
 if (results == undefined || results[0] == undefined)
 alert('We were unable to find any results.\n\nTo begin a new Search, Please Click on the Start Searching Button');
@@ -225,6 +241,37 @@ function getImmediateFamily(people, resultsArray,emptyArray=[],i=0){
 		var children = getChildren(people, resultsArray);
 		if (children != undefined)
 			emptyArray = emptyArray.concat(children);
+		return emptyArray;
+}
+function getNextOfKin(people, resultsArray,emptyArray=[],i=0){
+
+		var spouse = getSpouse(people,resultsArray);
+		if (spouse != undefined)
+			emptyArray = emptyArray.concat(spouse);
+		var children = getChildren(people, resultsArray);
+		if (children != undefined)
+			emptyArray = emptyArray.concat(children);
+		var parents = getParents(people, resultsArray);
+		if (parents != undefined)
+			emptyArray = emptyArray.concat(parents);
+		var siblings = getSiblings(people, resultsArray);
+		if (siblings != undefined)
+			emptyArray = emptyArray.concat(siblings);
+		var grandChildren = getGrandChildren(people, resultsArray);
+		if (grandChildren != undefined)
+			emptyArray = emptyArray.concat(grandChildren);
+		var grandparents = getGrandParents(people, resultsArray);
+		if (grandparents != undefined)
+			emptyArray = emptyArray.concat(grandparents);
+		var nieceNephew = getNieceNephew(people, resultsArray);
+		if (nieceNephew != undefined)
+			emptyArray = emptyArray.concat(nieceNephew);
+		var auntUncle = getAuntUncle(people, resultsArray);
+		if (auntUncle != undefined)
+			emptyArray = emptyArray.concat(auntUncle);
+
+
+
 		return emptyArray;
 }
 function getParents(people, resultsArray, i = 0){
