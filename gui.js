@@ -11,7 +11,7 @@ function initSearch(people)
 			var decendentAnswer = promptForDecendents();
 			var decendents = [];
 			if (decendentAnswer == "yes"){
-				decendents = getChildren(people,NameSearchResults);
+				decendents = getSiblings(people,NameSearchResults);
 				displayResults(decendents);
 			}
 			else if (input == "no")
@@ -260,30 +260,51 @@ function getParents(people, resultsArray, i = 0){
 						}});
 			}
 			function getChildren(people, resultsArray, emptyArray = [], i=0){
-			var arraylength = resultsArray.length;
-			var newArray = [];
-				// if (i >= arraylength)
-				// 	return undefined;
-				// else
-					// do{
-								var searchedPerson = getSearchedResult(resultsArray,i);
-								newArray = people.filter(function(person){
-									var parentsArray = person.parents;
-									var firstParentId = getFirstResult(parentsArray);
-									var secondParentId = getSecondResult(parentsArray);
-
-										if((searchedPerson.id == firstParentId || searchedPerson.id == secondParentId))
-											return true;
-										else
-											return false;
-
-								});
-								emptyArray = emptyArray.concat(newArray);
-								// i++;
-						// }
-						// while (i < arraylength);
-						return emptyArray;
+				var arraylength = resultsArray.length;
+				var newArray = [];
+				var searchedPerson = getSearchedResult(resultsArray,i);
+				newArray = people.filter(function(person){
+						var parentsArray = person.parents;
+						var firstParentId = getFirstResult(parentsArray);
+						var secondParentId = getSecondResult(parentsArray);
+							if((searchedPerson.id == firstParentId || searchedPerson.id == secondParentId))
+								return true;
+							else
+								return false;
+					});
+				emptyArray = emptyArray.concat(newArray);
+				return emptyArray;
 	}
-// function addSixTo(x){
-//   return x + 6;
-// }
+	function getSiblings(people, resultsArray, emptyArray = [], i=0){
+		var parentsArray = getParents(people,resultsArray);
+		if (parentsArray[0] == undefined)
+			return undefined;
+		else
+			var silbings =  getChildren(people, parentsArray);
+			var searchedPerson = getSearchedResult(resultsArray,i);
+			return silbings.filter(function(person){
+				if((searchedPerson.id != person.id))
+				return true;
+				else
+				return false;
+		});
+}
+function getGrandChildren(people, resultsArray, emptyArray = [],i = 0){
+	var children = getChildren(people, resultsArray);
+	var arraylength = children.length;
+	var newArray = [];
+	do{
+		var searchedPerson = getSearchedResult(resultsArray,i);
+		newArray = people.filter(function(person){
+				var parentsArray = person.parents;
+				var firstParentId = getFirstResult(parentsArray);
+				var secondParentId = getSecondResult(parentsArray);
+					if((searchedPerson.id == firstParentId || searchedPerson.id == secondParentId))
+						return true;
+					else
+						return false;
+		});
+	}
+	while (arraylength >= i);
+	return newArray;
+}
